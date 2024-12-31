@@ -1,29 +1,45 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
   {
+    fullName: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
       unique: true,
-    },
-    fullName: {
-      type: String,
-      required: true,
     },
     password: {
       type: String,
       required: true,
       minlength: 6,
     },
-    profilePic: {
+    profilePicture: {
       type: String,
-      default: "",
+      default: '',
+    },
+    sentNewMessageNotification: {
+      type: Boolean,
+      default: false,
+    },
+    selectedUserToChatWithId: {
+      type: String,
+      default: '',
+    },
+    idsOfSendersWhoLeftUnreadMessages: {
+      type: Array,
+      default: [''],
+    },
+    idsOfReceiversWhoUnreadMessages: {
+      type: Array,
+      default: [''],
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true, // add createdAt and updatedAt fields
+  }
 );
 
-const User = mongoose.model("User", userSchema);
-
-export default User;
+export default mongoose.model('User', userSchema);

@@ -1,3 +1,135 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --background: #141025;
+  --foreground: #171717;
+  --text-color: #ffffff;
+  --black-text-color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* DESKTOP TYPOGRAPHY */
+/* HEADINGS */
+
+h1 {
+  @apply text-9xl;
+}
+h2 {
+  @apply text-8xl;
+}
+h3 {
+  @apply text-5xl;
+}
+h4 {
+  @apply text-3xl;
+}
+h5 {
+  @apply text-2xl;
+}
+p {
+  @apply text-base;
+}
+
+/* PARAGRAPHS */
+.body-h1 {
+  @apply text-9xl;
+}
+
+.body-xl {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 400;
+}
+
+.body-lg {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+.body-md {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.body-sm {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+}
+
+.body-xs {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+/* TABLET/MOBILE TYPOGRAPHY */
+@media (max-width: 1295px) {
+  /* HEADINGS */
+  h1 {
+    @apply text-7xl;
+  }
+  h2 {
+    @apply text-6xl;
+  }
+  h3 {
+    @apply text-4xl;
+  }
+  h4 {
+    @apply text-2xl;
+  }
+  h5 {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 500;
+  }
+  /* PARAGRAPHS */
+
+  .body-h1 {
+    @apply text-7xl;
+  }
+
+  .body-xl {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 400;
+  }
+
+  .body-lg {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+
+  .body-md {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+  }
+
+  .body-sm {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 400;
+  }
+
+  .body-xs {
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 400;
+  }
+}

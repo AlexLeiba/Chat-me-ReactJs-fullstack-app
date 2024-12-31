@@ -1,16 +1,24 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
+export const generateToken = (userPayload, res) => {
+  const token = jwt.sign(
+    {
+      id: userPayload._id,
+      email: userPayload.email,
+      fullName: userPayload.fullName,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: '7d', // 7 days
+    }
+  );
 
-export const generateToken = (userId, res) => {
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
+  // Create JWT token //
+  res.cookie('chat-me-token', token, {
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    httpOnly: true, //preventing cookie from being accessed by client side js, prevents XSS attacks (cross site scripting attacks)
+    sameSite: 'strict', //CSRF protection, request forgery attacks/None
+    secure: false, // cookie only sent over HTTPS not HTTP
+    // sameSite: 'lax', // TODO: ask gpt what it does
+    // path: '/', // Set path to '/' to make it available to all routes
   });
-
-  res.cookie("jwt", token, {
-    maxAge: 7 * 24 * 60 * 60 * 1000, // MS
-    httpOnly: true, // prevent XSS attacks cross-site scripting attacks
-    sameSite: "strict", // CSRF attacks cross-site request forgery attacks
-    secure: process.env.NODE_ENV !== "development",
-  });
-
-  return token;
 };
