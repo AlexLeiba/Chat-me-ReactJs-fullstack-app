@@ -54,7 +54,7 @@ function ChatInput() {
       if (file.size > MAX_FILE_SIZE) {
         // 10 MB limit
         return toast.error(
-          'File size is too large,try to upload a smaller image'
+          'File size is too large,try to upload a smaller image than 10 MB'
         );
       }
 

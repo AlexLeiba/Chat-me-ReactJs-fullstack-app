@@ -9,6 +9,7 @@ import { Button } from '../components/UI/Button/Button';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import toast from 'react-hot-toast';
 
 function ProfilePage() {
   const [openLightbox, setOpenLightbox] = useState({
@@ -36,8 +37,15 @@ function ProfilePage() {
   }
 
   function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; //10 MB
     const file = e.target.files?.[0];
     if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        // 10 MB limit
+        return toast.error(
+          'File size is too large,try to upload a smaller image than 10 MB'
+        );
+      }
       const reader = new FileReader();
       reader.readAsDataURL(file);
 
