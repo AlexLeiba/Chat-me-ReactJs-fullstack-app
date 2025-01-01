@@ -95,8 +95,12 @@ const useChatStore = create<ChatStoreType>((set, get) => ({
         return toast.error(error.response.data.message);
       } else if (error.response.statusText) {
         return toast.error(error.response.statusText);
+      } else if (error.message) {
+        return toast.error(error.message);
       }
-      return toast.error(error.message);
+      toast.error(
+        'Something went wrong, please try again with a different image'
+      );
     }
   },
 
