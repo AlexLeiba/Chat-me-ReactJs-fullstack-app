@@ -36,13 +36,13 @@ function ProfilePage() {
   }
 
   function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const MAX_FILE_SIZE = 10 * 1024 * 1024; //10 MB
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; //5 MB
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > MAX_FILE_SIZE) {
         // 10 MB limit
         return toast.error(
-          'File size is too large,try to upload a smaller image than 10 MB'
+          'File size is too large,try to upload a smaller image than 5 MB'
         );
       }
       const reader = new FileReader();

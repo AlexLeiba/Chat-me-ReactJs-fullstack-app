@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image as ImageIcon, Send, Smile, X } from 'lucide-react';
 import useChatStore from '../../store/useChatStore';
 import toast from 'react-hot-toast';
@@ -23,6 +23,23 @@ function ChatInput() {
 
   const { selectedUser, sendMessage, slideMenuOnMobile } = useChatStore();
 
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
+
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (
+      emojiPickerRef.current &&
+      !emojiPickerRef.current.contains(e.target as Node)
+    ) {
+      setShowPicker(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  });
+
   // SEND MESSAGE HANDLER
   async function handleSendMessage() {
     // Clear input
@@ -44,7 +61,7 @@ function ChatInput() {
   }
 
   function handleImage(e: any) {
-    const MAX_FILE_SIZE = 10 * 1024 * 1024; //10 MB
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; //5 MB
     const file = e.target.files[0];
 
     if (!file.type.startsWith('image')) {
@@ -54,7 +71,7 @@ function ChatInput() {
       if (file.size > MAX_FILE_SIZE) {
         // 10 MB limit
         return toast.error(
-          'File size is too large,try to upload a smaller image than 10 MB'
+          'File size is too large,try to upload a smaller image than 5 MB'
         );
       }
 
@@ -123,7 +140,10 @@ function ChatInput() {
   };
 
   return (
-    <div className='lg:p-4 md:p-4 pt-4 pb-4 border-t border-base-300  bg-base-200 relative '>
+    <div
+      className='lg:p-4 md:p-4 pt-4 pb-4 border-t border-base-300  bg-base-200 relative '
+      ref={emojiPickerRef}
+    >
       {/* IMAGE PREVIEW */}
       {showPicker && (
         <div className='absolute lg:left-4 md:left-4 -left-2  bottom-20 z-10 bg-white rounded-lg p-4'>
