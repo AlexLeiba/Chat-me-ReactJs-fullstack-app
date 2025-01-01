@@ -213,7 +213,7 @@ const useAuthStore: UseBoundStore<StoreApi<Store>> = create(
             authUser: response.data,
           });
 
-          toast.success('Profile updated successfully');
+          toast.success('Profile image was updated successfully');
         } catch (error: any) {
           console.log('🚀 \n\n ~ updateProfile: ~ error:', error);
 
@@ -223,12 +223,13 @@ const useAuthStore: UseBoundStore<StoreApi<Store>> = create(
           });
 
           if (error.response.data.message) {
-            toast.error(error.response.data.message);
+            return toast.error(error.response.data.message);
           } else if (error.response.statusText) {
-            toast.error(error.response.statusText);
-          } else if (error.message) {
-            toast.error(error.message);
+            return toast.error(error.response.statusText);
           }
+          return toast.error(
+            'Something went wrong, please try again with a smaller image'
+          );
         } finally {
           set({ isLoadingUpdateProfile: false });
         }
