@@ -1,7 +1,7 @@
 import useChatStore, { User } from '../../store/useChatStore';
 import { ChevronLeft, Users } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import SidebarSkeleton from '../../components/Skeletons/SidebarSkeleton';
+// import SidebarSkeleton from '../../components/Skeletons/SidebarSkeleton';
 import useAuthStore from '../../store/useAuthStore';
 import { Input } from '../UI/Input/Input';
 import { Spacer } from '../UI/spacer/spacer';
@@ -153,7 +153,8 @@ function Sidebar() {
       </div>
 
       {isGetUsersLoading ? (
-        <SidebarSkeleton />
+        // <SidebarSkeleton />
+        <p>Loading...</p>
       ) : (
         <>
           {/* USER CARDS */}

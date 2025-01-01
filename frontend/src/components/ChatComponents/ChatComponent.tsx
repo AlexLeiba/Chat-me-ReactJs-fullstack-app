@@ -55,6 +55,7 @@ function ChatComponent() {
 
           {/* Chat skeleton */}
           {/* <MessageSkeleton /> */}
+          <p>Loading...</p>
 
           <ChatInput />
         </div>
