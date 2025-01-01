@@ -1,4 +1,3 @@
-'use client';
 import { useWindowSize } from '../../lib/useWindowSize';
 import useAuthStore from '../../store/useAuthStore';
 import useChatStore from '../../store/useChatStore';
