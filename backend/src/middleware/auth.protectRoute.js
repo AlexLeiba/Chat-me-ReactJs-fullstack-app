@@ -8,15 +8,13 @@ export const protectRoute = async (req, res, next) => {
 
   try {
     if (!token) {
-      return res.cookie('chat-me-token', '', {
-        maxAge: 0, //expire immediately,
-      });
+      return res.status(401).json({ message: 'No Token Provided' });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET); // decoded is user value based on token data
 
     if (!decoded) {
-      throw new Error('You are not authorized');
+      throw new Error('Invalid Token');
     }
 
     const userFromDB = await UserModel.findById(decoded.id).select(
@@ -24,7 +22,7 @@ export const protectRoute = async (req, res, next) => {
     );
 
     if (!userFromDB) {
-      throw new Error('You are not authorized');
+      throw new Error('User not found');
     }
 
     // attach user object to req

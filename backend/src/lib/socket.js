@@ -11,9 +11,13 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.BASE_URL, //front end url
+    origin: ['http://localhost:5173'], //front end url origin
   },
 });
+
+export function getReceiverSucketId(userId) {
+  return onlineUsersSocketMap[userId];
+}
 
 const onlineUsersSocketMap = {}; //{userId: sockedId}
 
@@ -38,9 +42,5 @@ io.on('connection', (socket) => {
     io.emit('onlineUsers', Object.keys(onlineUsersSocketMap)); //is used to send events to all connected clients (brodcast)
   });
 });
-
-export function getReceiverSucketId(userId) {
-  return onlineUsersSocketMap[userId];
-}
 
 export { io, app, server };

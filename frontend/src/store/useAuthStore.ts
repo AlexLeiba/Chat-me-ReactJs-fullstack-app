@@ -52,10 +52,8 @@ type Store = {
   onlineUsers: string[];
 };
 
-// const BACKEND_BASE_URL = 'http://localhost:5001/';
-
-// BACKEND-BASE-URL_PRODUCTION
-const BACKEND_BASE_URL = 'https://chat-me-full-stack-app.onrender.com/';
+const BACKEND_BASE_URL =
+  import.meta.env.MODE === 'development' ? 'http://localhost:5001' : '/';
 
 export type FormType = Zod.infer<typeof SignupSchema>;
 
