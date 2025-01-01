@@ -1,4 +1,3 @@
-'use client';
 import { Col, Container, Row } from '../components/UI/Grid';
 import useGlobalTeamStore from '../store/useThemeStore';
 import React from 'react';

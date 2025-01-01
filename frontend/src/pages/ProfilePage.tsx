@@ -1,4 +1,3 @@
-'use client';
 import React, { useRef, useState } from 'react';
 import useAuthStore from '../store/useAuthStore';
 import { Container, Row, Col } from '../components/UI/Grid';

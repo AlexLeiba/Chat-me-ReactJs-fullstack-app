@@ -1,4 +1,3 @@
-'use client';
 import React, { useState } from 'react';
 import { Container, Row, Col } from '../UI/Grid';
 import {
