@@ -23,7 +23,7 @@ app.use(express.json()); // for parsing application/json -> req.body
 
 app.use(
   cors({
-    origin: ['http://localhost:5173'], // Allow requests from the frontend origin
+    origin: 'http://localhost:5173', // Allow requests from the frontend origin
     credentials: true,
   })
 );

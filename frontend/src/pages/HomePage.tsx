@@ -19,7 +19,7 @@ export default function HomePage() {
   }, [checkAuth]);
 
   return (
-    <Container spacing='none'>
+    <Container>
       <Row className='lg:mt-12 md:mt-12 mt-8 mb-8 px-0 justify-center rounded-lg shadow-lg lg:max-h-[900px] md:max-h-[900px] max-h-[800px] h-[calc(100vh-200px)]'>
         <Col
           lg={3}

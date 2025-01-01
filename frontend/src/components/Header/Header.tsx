@@ -15,18 +15,18 @@ import { useWindowSize } from '../../lib/useWindowSize';
 import breakpoints from '../../lib/breakpoint';
 import { cn } from '../../lib/utils';
 import { Spacer } from '../UI/spacer/spacer';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 const MOBILE_MAX_BREAKPOINT = breakpoints.mobile.breakpoints.max;
 
-export function Header({ type }: { type: 'auth' | 'dashboard' }) {
+export function Header() {
   const [windowWidth] = useWindowSize();
   const navigate = useNavigate();
   const { authUser, logout } = useAuthStore();
   const [openBurgerMenu, setOpenBurgerMenu] = useState(false);
+  const { pathname } = useLocation();
 
   function handleLogout() {
     logout();
-    navigate('/signin');
   }
 
   function handleNavigationsMenu(url: string) {
@@ -34,6 +34,31 @@ export function Header({ type }: { type: 'auth' | 'dashboard' }) {
 
     windowWidth < MOBILE_MAX_BREAKPOINT && setOpenBurgerMenu(false);
   }
+
+  const headerMenuLinks = [
+    {
+      name: 'Chat',
+      url: '/',
+      icon: (
+        <MessageCircleCode width={15} height={15} className='cursor-pointer' />
+      ),
+    },
+    {
+      name: 'Profile',
+      url: '/profile',
+      icon: <User width={15} height={15} className='cursor-pointer' />,
+    },
+    {
+      name: 'About',
+      url: '/about',
+      icon: <InfoIcon width={15} height={15} className='cursor-pointer' />,
+    },
+    {
+      name: 'Settings',
+      url: '/settings',
+      icon: <Settings width={15} height={15} className='cursor-pointer' />,
+    },
+  ];
   return (
     <Container
       spacing='none'
@@ -68,55 +93,47 @@ export function Header({ type }: { type: 'auth' | 'dashboard' }) {
 
               {/* LIST OF LINKS */}
               {windowWidth > MOBILE_MAX_BREAKPOINT ? (
-                // Desktop navbar
                 <div className='flex gap-8'>
-                  {type === 'auth' && (
-                    <>
-                      <Link to={'/about'}>
-                        <div className='flex gap-1'>
-                          <InfoIcon className='cursor-pointer' />
-                          <span>About</span>
-                        </div>
-                      </Link>
-
-                      <Link to={'/settings'} className='flex gap-1'>
-                        <Settings className='cursor-pointer' />
-                        <span>Settings</span>
-                      </Link>
-                    </>
-                  )}
-                  {type === 'dashboard' && (
-                    <>
-                      <Link to='/' className='flex gap-1'>
-                        <MessageCircleCode className='cursor-pointer' />
-                        <span>Chat</span>
-                      </Link>
-
-                      <Link to='/profile' className='flex gap-1'>
-                        <User className='cursor-pointer' />
-                        <span>Profile</span>
-                      </Link>
-
-                      <Link to={'/about'}>
-                        <div className='flex gap-1'>
-                          <InfoIcon className='cursor-pointer' />
-                          <span>About</span>
-                        </div>
-                      </Link>
-
-                      <Link to={'/settings'} className='flex gap-1'>
-                        <Settings className='cursor-pointer' />
-                        <span>Settings</span>
-                      </Link>
-
-                      <button
-                        onClick={() => handleLogout()}
-                        className='flex gap-1 cursor-pointer'
+                  {headerMenuLinks.map((menu) => {
+                    if (
+                      (!authUser?._id && menu.name === 'Chat') ||
+                      (!authUser?._id && menu.name === 'Profile')
+                    ) {
+                      return;
+                    }
+                    return (
+                      <Link
+                        to={menu.url}
+                        key={menu.name}
+                        className={cn(
+                          'flex gap-1 items-center',
+                          pathname === menu.url && 'font-bold text-white'
+                        )}
                       >
-                        <LogOut className='cursor-pointer' />
-                        <span>Logout</span>
-                      </button>
-                    </>
+                        {menu.icon}
+                        <p
+                          className={cn(
+                            'text-sm text-white/75',
+                            pathname === menu.url && 'text-white'
+                          )}
+                        >
+                          {menu.name}
+                        </p>
+                      </Link>
+                    );
+                  })}
+                  {authUser?._id && (
+                    <button
+                      onClick={() => handleLogout()}
+                      className='flex gap-1 cursor-pointer items-center'
+                    >
+                      <LogOut
+                        width={15}
+                        height={15}
+                        className='cursor-pointer'
+                      />
+                      <p className='text-sm text-white/75'>Logout</p>
+                    </button>
                   )}
                 </div>
               ) : (
@@ -136,16 +153,14 @@ export function Header({ type }: { type: 'auth' | 'dashboard' }) {
                     {authUser && (
                       <div className='flex gap-12 flex-col'>
                         <div
-                          onClick={() => handleNavigationsMenu('/dashboard')}
+                          onClick={() => handleNavigationsMenu('/')}
                           className='flex gap-1 cursor-pointer'
                         >
                           <MessageCircleCode className='cursor-pointer' />
                           <span>Chat</span>
                         </div>
                         <div
-                          onClick={() =>
-                            handleNavigationsMenu('/dashboard/profile')
-                          }
+                          onClick={() => handleNavigationsMenu('/profile')}
                           className='flex gap-1 cursor-pointer'
                         >
                           <User className='cursor-pointer' />
@@ -154,22 +169,14 @@ export function Header({ type }: { type: 'auth' | 'dashboard' }) {
                       </div>
                     )}
                     <div
-                      onClick={() =>
-                        handleNavigationsMenu(
-                          type === 'auth' ? '/about' : '/dashboard/about'
-                        )
-                      }
+                      onClick={() => handleNavigationsMenu('/about')}
                       className='flex gap-1 cursor-pointer'
                     >
                       <InfoIcon />
                       <span>About</span>
                     </div>
                     <div
-                      onClick={() =>
-                        handleNavigationsMenu(
-                          type === 'auth' ? '/settings' : '/dashboard/settings'
-                        )
-                      }
+                      onClick={() => handleNavigationsMenu('/settings')}
                       className='flex gap-1 cursor-pointer'
                     >
                       <Settings className='cursor-pointer' />

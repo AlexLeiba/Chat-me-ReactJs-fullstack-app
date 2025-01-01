@@ -91,20 +91,35 @@ export async function login(req, res) {
     return res.status(500).json({ message: 'Internal server error on login' });
   }
 }
-export async function logout({ req, res }) {
-  try {
-    res.cookie('chat-me-token', '', {
-      maxAge: 0, //expire immediately,
-    });
+// export async function logout(req, res) {
+//   try {
+//     // await UserModel.findByIdAndUpdate(req.user._id, {
+//     //   selectedUserToChatWithId: null,
+//     // });
 
-    res
-      .status(200)
-      .json({ message: 'Logged out successfully', user: req.user });
+//     res.cookie('chat-me-token', '', {
+//       maxAge: 0, //expire immediately,
+//     });
+//   } catch (error) {
+//     console.log('🚀 \n\n ~ logout ~ error:', error);
+//     res.status(500).json({ message: 'Internal server error on logout' });
+//   }
+// }
+
+export const logout = async (req, res) => {
+  try {
+    const updated = await UserModel.findByIdAndUpdate(req.user._id, {
+      selectedUserToChatWithId: '',
+    });
+    if (updated) {
+      res.cookie('chat_me_token', '', { maxAge: 0 });
+      res.status(200).json({ message: 'Logged out successfully' });
+    }
   } catch (error) {
-    console.log('🚀 \n\n ~ logout ~ error:', error);
-    res.status(500).json({ message: 'Internal server error on logout' });
+    console.log('Error in logout controller', error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+};
 
 export async function updateProfile(req, res) {
   try {
@@ -206,20 +221,11 @@ export async function updateProfileFullName(req, res) {
   }
 }
 
-export async function checkAuth(req, res) {
+export const checkAuth = (req, res) => {
   try {
-    // app.get('/api/auth/check', (req, res) => {
-    //   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-    //   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    //   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    //   res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-    //   // Your logic here
-    //   res.status(200).json({ message: 'Success' });
-    // });
     res.status(200).json(req.user);
   } catch (error) {
-    console.log('🚀 \n\n ~ checkAuth ~ error:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+    console.log('Error in checkAuth controller', error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+};

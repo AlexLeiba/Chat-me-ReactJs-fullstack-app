@@ -3,12 +3,14 @@ import { Container, Row, Col } from '../UI/Grid';
 import { Github, LinkedinIcon, Mail } from 'lucide-react';
 import { Spacer } from '../UI/spacer/spacer';
 import { Link } from 'react-router-dom';
+import useAuthStore from '../../../src/store/useAuthStore';
 
-export function Footer({ type }: { type: 'auth' | 'dashboard' }) {
+export function Footer() {
+  const { authUser } = useAuthStore();
   return (
     <Container spacing='none' variant={'fluid'} className='bg-secondary/80'>
       <Row>
-        <Container spacing='none'>
+        <Container spacing='medium'>
           <Row>
             <Col lg={2} md={1} sm={2} className=' p-2 flex  justify-start '>
               <div className='flex flex-col'>
@@ -52,26 +54,20 @@ export function Footer({ type }: { type: 'auth' | 'dashboard' }) {
               <div className='flex flex-col '>
                 <p className='text-xl font-bold'>Pages</p>
                 <Spacer size={2} />
-                <Link
-                  to={type === 'auth' ? '/settings' : '/dashboard/settings'}
-                  className='flex gap-1'
-                >
+                <Link to={'/settings'} className='flex gap-1'>
                   <p>Settings</p>
                 </Link>
-                {type === 'dashboard' && (
+                {authUser?._id && (
                   <>
-                    <Link to='/dashboard/profile' className='flex gap-1'>
+                    <Link to='/profile' className='flex gap-1'>
                       <p>Profile</p>
                     </Link>
-                    <Link to='/dashboard' className='flex gap-1'>
+                    <Link to='/' className='flex gap-1'>
                       <p>Chat</p>
                     </Link>
                   </>
                 )}
-                <Link
-                  to={type === 'dashboard' ? '/dashboard/about' : '/about'}
-                  className='flex gap-1'
-                >
+                <Link to={'/about'} className='flex gap-1'>
                   <p>About</p>
                 </Link>
               </div>
@@ -84,7 +80,7 @@ export function Footer({ type }: { type: 'auth' | 'dashboard' }) {
                   <div className='flex gap-12'>
                     <div>
                       <p className='font-bold'>Front-end</p>
-                      <p>Next.js</p>
+                      <p>React.js</p>
                       <p>TypeScript</p>
                       <p>Tailwind CSS</p>
                     </div>

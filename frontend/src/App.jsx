@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 
@@ -7,18 +8,18 @@ import LoginPage from './pages/LoginPage';
 import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 import AboutPage from './pages/AboutPage';
+import UserProfilePage from './pages/UserProfilePage';
 
 import { Routes, Route, Navigate } from 'react-router-dom';
 import useAuthStore from './store/useAuthStore';
 import useThemeStore from './store/useThemeStore';
-import { useEffect } from 'react';
 
 import { Loader } from 'lucide-react';
 import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
-  const { theme } = useThemeStore();
+  const { globalTheme } = useThemeStore();
 
   console.log({ onlineUsers });
 
@@ -36,9 +37,9 @@ const App = () => {
     );
 
   return (
-    <div data-theme={theme}>
+    <div data-theme={globalTheme}>
       <header>
-        <Header type='auth' />
+        <Header />
       </header>
 
       <main className='flex flex-col  min-h-[calc(100vh-142px)] '>
@@ -57,8 +58,14 @@ const App = () => {
           />
           <Route path='/settings' element={<SettingsPage />} />
           <Route
-            path='/profile:id'
+            path='/profile'
             element={authUser ? <ProfilePage /> : <Navigate to='/sign-in' />}
+          />
+          <Route
+            path='/profile/:id'
+            element={
+              authUser ? <UserProfilePage /> : <Navigate to='/sign-in' />
+            }
           />
           <Route path='/about' element={<AboutPage />} />
         </Routes>

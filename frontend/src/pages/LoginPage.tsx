@@ -1,6 +1,5 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema } from '../lib/zodSchemas';
 import useAuthStore, { FormType } from '../store/useAuthStore';
 import { Container, Row, Col } from '../components/UI/Grid';
@@ -12,6 +11,7 @@ import { Spacer } from '../components/UI/spacer/spacer';
 import { Button } from '../components/UI/Button/Button';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ function LoginPage() {
     handleSubmit,
     register,
     formState: { errors },
+    watch,
   } = useForm<FormType>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -29,12 +30,14 @@ function LoginPage() {
       password: '',
     },
   });
+  console.log('🚀 ~ LoginPage ~ errors:', errors, watch('email'));
 
   async function onSubmit(data: FormType) {
+    console.log('🚀 ~ onSubmit ~ data:', data);
     await signIn(data);
 
     // If the sign-in request will fail, The middleware will make sure that user can't navigate to dashboard
-    navigate('/dashboard');
+    navigate('/');
   }
   return (
     <Container>
@@ -71,6 +74,7 @@ function LoginPage() {
               placeholder='Your email'
             />
             <Spacer size={4} />
+
             <Input
               leftIcon={
                 <Key
@@ -111,13 +115,6 @@ function LoginPage() {
             </Link>
           </div>
         </Col>
-
-        {/* <Col lg={5} lgOffset={1} md={2} sm={2}>
-          <AuthImagePattern
-            title='Join our community'
-            subtitle='Connect with friends,share moments, and stay in touch'
-          />
-        </Col> */}
       </Row>
     </Container>
   );

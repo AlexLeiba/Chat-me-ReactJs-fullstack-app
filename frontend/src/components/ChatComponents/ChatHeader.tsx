@@ -45,7 +45,7 @@ function ChatHeader() {
         {windowWidth < MOBILE_MAX_BREAKPOINT &&
           slideMenuOnMobile.chat === 3 && (
             <div className='relative mx-auto '>
-              <Link to={`/dashboard/profile/${selectedUser._id}`}>
+              <Link to={`/profile/${selectedUser._id}`}>
                 <img
                   width={100}
                   height={100}
@@ -66,7 +66,7 @@ function ChatHeader() {
           {/* ON DESKTOP / TABLET */}
           {windowWidth > MOBILE_MAX_BREAKPOINT && (
             <div className='relative mx-auto '>
-              <Link to={`/dashboard/profile/${selectedUser._id}`}>
+              <Link to={`/profile/${selectedUser._id}`}>
                 <img
                   width={100}
                   height={100}
@@ -100,7 +100,7 @@ function ChatHeader() {
                   </p>
                 </div>
 
-                <Link to={`/dashboard/profile/${selectedUser._id}`}>
+                <Link to={`/profile/${selectedUser._id}`}>
                   <Eye className='w-6 h-6' />
                 </Link>
               </div>

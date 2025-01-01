@@ -110,8 +110,9 @@ function ChatComponent() {
             >
               {/* IMAGE */}
               {message.image && (
-                <div className='w-32 h-32 rounded-full bg-slate-200 flex justify-center items-center'>
+                <div className='w-32 h-32 rounded-lg bg-slate-200 flex justify-center items-center overflow-hidden'>
                   <img
+                    className='object-contain w-full h-full'
                     src={message.image}
                     alt='avatar'
                     width={40}

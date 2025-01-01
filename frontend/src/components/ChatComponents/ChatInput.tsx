@@ -44,12 +44,20 @@ function ChatInput() {
   }
 
   function handleImage(e: any) {
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; //10 MB
     const file = e.target.files[0];
 
     if (!file.type.startsWith('image')) {
       return toast.error('Only image format is allowed');
     }
     if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        // 10 MB limit
+        return toast.error(
+          'File size is too large,try to upload a smaller image'
+        );
+      }
+
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -128,20 +136,22 @@ function ChatInput() {
       )}
 
       {message.image && (
-        <div className='absolute -top-16 bg-slate-300 rounded-lg z-20'>
+        <div className='absolute -top-16 bg-slate-300 rounded-lg z-10  '>
           <div
             onClick={handleRemovePreviewImage}
-            className=' cursor-pointer w-6 h-6 flex justify-center items-center  rounded-full bg-primary border-solid border-[1px] border-black absolute -top-2 -right-2 hover:border-white'
+            className=' cursor-pointer w-6 h-6 flex justify-center items-center  rounded-full bg-primary border-solid border-[1px] border-black absolute -top-2 -right-2 hover:border-white z-20'
           >
             <X className=' w-4 text-primary-content/70 text-base ' />
           </div>
-          <img
-            className=' object-cover h-16 z-20 '
-            src={message.image}
-            alt='image preview'
-            width={100}
-            height={100}
-          />
+          <div className='h-full w-full relative overflow-hidden bg-slate-300 rounded-lg'>
+            <img
+              className=' object-contain h-16 z-20 '
+              src={message.image}
+              alt='image preview'
+              width={100}
+              height={100}
+            />
+          </div>
         </div>
       )}
       <div className='flex gap-4 items-center justify-between'>

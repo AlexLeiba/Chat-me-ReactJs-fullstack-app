@@ -90,12 +90,13 @@ const useChatStore = create<ChatStoreType>((set, get) => ({
 
       set({ messages: [...messages, response.data] });
     } catch (error: any) {
+      console.log('🚀 ~ sendMessage: ~ error:=>>>\n\n\n', error);
       if (error.response.data.message) {
-        toast.error(error.response.data.message);
+        return toast.error(error.response.data.message);
+      } else if (error.response.statusText) {
+        return toast.error(error.response.statusText);
       }
-      if (error.response.statusText) {
-        toast.error(error.response.statusText);
-      }
+      return toast.error(error.message);
     }
   },
 

@@ -22,7 +22,7 @@ function UserProfilePage() {
   });
 
   useEffect(() => {
-    if (!selectedUser) return navigate('/dashboard');
+    if (!selectedUser) return navigate('/');
   }, [selectedUser]);
 
   function handleShowProfileImage() {

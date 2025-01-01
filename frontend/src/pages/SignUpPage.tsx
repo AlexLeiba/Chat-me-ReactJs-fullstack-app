@@ -34,7 +34,7 @@ function SignUpPage() {
     await signUp(data);
 
     // If the sign-up request will fail, The middleware will make sure that user can't navigate to dashboard
-    navigate('/dashboard');
+    navigate('/');
   }
 
   return (
@@ -126,7 +126,7 @@ function SignUpPage() {
 
           <div className='flex justify-center items-center gap-2 text-center'>
             <p className='text-sm'>Already have an account?</p>
-            <Link className=' underline ' to='/signin'>
+            <Link className=' underline ' to='/sign-in'>
               Sign in
             </Link>
           </div>

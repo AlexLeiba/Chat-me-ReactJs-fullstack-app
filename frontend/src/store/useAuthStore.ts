@@ -87,13 +87,13 @@ const useAuthStore: UseBoundStore<StoreApi<Store>> = create(
         } catch (error: any) {
           console.log('🚀 \n\n ~ checkAuth: ~ error:', error);
           set({ authUser: null });
-          if (error.response?.data?.message) {
-            toast.error(error.response.data.message);
-          } else if (error?.response?.statusText) {
-            toast.error(error.response.statusText);
-          } else if (error.message) {
-            toast.error(error.message);
-          }
+          // if (error.response?.data?.message) {
+          //   toast.error(error.response.data.message);
+          // } else if (error?.response?.statusText) {
+          //   toast.error(error.response.statusText);
+          // } else if (error.message) {
+          //   toast.error(error.message);
+          // }
         } finally {
           set({ isLoadingCheckAuth: false });
         }
@@ -179,31 +179,22 @@ const useAuthStore: UseBoundStore<StoreApi<Store>> = create(
       // LOG OUT
       logout: async () => {
         try {
-          // Parallel Requests: If the two requests are independent and can happen simultaneously, use Promise.all():
-
-          await Promise.all([
-            axiosInstance.put('/messages/unselect-user-to-chat-with'),
-            axiosInstance.post('/auth/logout'),
-          ]);
-
-          // Clear local store
+          await axiosInstance.post('/auth/logout');
           set({ authUser: null });
-          localStorage.removeItem('chat-me-session');
 
-          // disconnect socket
           get().disconnectSocket();
         } catch (error: any) {
           console.log('🚀 \n\n ~ logout: ~ error:', error);
 
           set({ authUser: null });
 
-          if (error.response?.data?.message) {
-            toast.error(error.response.data.message);
-          } else if (error?.response?.statusText) {
-            toast.error(error.response.statusText);
-          } else if (error.message) {
-            toast.error(error.message);
-          }
+          // if (error.response?.data?.message) {
+          //   toast.error(error.response.data.message);
+          // } else if (error?.response?.statusText) {
+          //   toast.error(error.response.statusText);
+          // } else if (error.message) {
+          //   toast.error(error.message);
+          // }
         }
       },
 
