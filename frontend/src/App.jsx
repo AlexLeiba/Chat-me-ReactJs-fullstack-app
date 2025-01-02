@@ -25,17 +25,13 @@ const MOBILE_MAX_BREAKPOINT = breakpoints.mobile.breakpoints.max;
 const App = () => {
   const [windowWidth] = useWindowSize();
   const { pathname } = useLocation();
-  const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
   const { selectedUser } = useChatStore();
   const { globalTheme } = useThemeStore();
-
-  console.log({ onlineUsers });
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
-
-  console.log({ authUser });
 
   if (isCheckingAuth && !authUser)
     return (

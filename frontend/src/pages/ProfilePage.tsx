@@ -29,7 +29,6 @@ function ProfilePage() {
     loadingUpdateFullName,
     updateFullName,
   } = useAuthStore();
-  console.log('🚀 ~ Page ~ authUser:', authUser);
 
   function handleUploadImage() {
     refUploadImage.current?.click();

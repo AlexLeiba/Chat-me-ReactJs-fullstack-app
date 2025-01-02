@@ -10,18 +10,15 @@ import { Input } from '../components/UI/Input/Input';
 import { Spacer } from '../components/UI/spacer/spacer';
 import { Button } from '../components/UI/Button/Button';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 function LoginPage() {
-  const navigate = useNavigate();
   const { isLoadingSignIn, signIn } = useAuthStore();
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-    watch,
   } = useForm<FormType>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -30,14 +27,9 @@ function LoginPage() {
       password: '',
     },
   });
-  console.log('🚀 ~ LoginPage ~ errors:', errors, watch('email'));
 
   async function onSubmit(data: FormType) {
-    console.log('🚀 ~ onSubmit ~ data:', data);
-    await signIn(data);
-
-    // If the sign-in request will fail, The middleware will make sure that user can't navigate to dashboard
-    navigate('/');
+    signIn(data);
   }
   return (
     <Container spacing='large'>
