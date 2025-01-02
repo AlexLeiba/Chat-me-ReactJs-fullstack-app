@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: [''],
     },
+    messageCreatedAt: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   {
     timestamps: true, // add createdAt and updatedAt fields

@@ -17,7 +17,9 @@ export async function getAllUsersData(req, res) {
 
     const allUsers = await UserModel.find({
       _id: { $ne: currentLoggedUserId },
-    }).select('-password'); //grab all ids except mine , also exclude any password: $ne (is not equeal to) / exclude password
+    })
+      .select('-password')
+      .sort({ messageCreatedAt: -1 }); //grab all ids except mine , also exclude any password: $ne (is not equeal to) / exclude password
 
     const currentLoggedUser = await UserModel.findOne({
       _id: currentLoggedUserId,
@@ -169,15 +171,35 @@ export async function sendMessage(req, res) {
         isSelectedUserToChatWith:
           userToChatWith.selectedUserToChatWithId.toString() ===
           myId.toString(), // if user i send message to , has selected miself as user to chat with
+        createdAt: Date.now(),
       });
 
       if (newMessage) {
         await newMessage.save();
 
+        // UPDATE USERS INVOLVED IN THE CONVERSATION WITH NEW MESSAGE DATE IN ORDER TO SORT THE LIST OF NEW MESSAGES
+
+        // RECEIVER
+        await UserModel.updateOne(
+          //On new message set notification as true/ when user opens message it will be set to false
+          { _id: userIdToChatWith },
+          {
+            $set: {
+              messageCreatedAt: Date.now(),
+            },
+          }
+        );
+
+        // SENDER
         await UserModel.updateOne(
           //On new message set notification as true/ when user opens message it will be set to false
           { _id: myId },
-          { $set: { sentNewMessageNotification: true } }
+          {
+            $set: {
+              sentNewMessageNotification: true,
+              messageCreatedAt: Date.now(),
+            },
+          }
         );
 
         // CONNECT TO SOCKET MESSAGES

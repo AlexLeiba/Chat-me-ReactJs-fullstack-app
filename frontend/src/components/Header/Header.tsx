@@ -66,7 +66,7 @@ export function Header() {
     <Container
       spacing='none'
       variant={'fluid'}
-      className='fixed left-0 right-0 top-0 z-50  text-white  bg-secondary '
+      className='fixed left-0 right-0 top-0 z-50  text-white  bg-secondary/90 '
     >
       <Row>
         <Container spacing='none'>
