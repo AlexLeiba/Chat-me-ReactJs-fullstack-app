@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Container, Row, Col } from '../components/UI/Grid';
-import { Eye, User } from 'lucide-react';
+import { ChevronLeft, Eye, User } from 'lucide-react';
 
 import { Input } from '../components/UI/Input/Input';
 import { Spacer } from '../components/UI/spacer/spacer';
@@ -68,6 +68,7 @@ function UserProfilePage() {
 
   return (
     <Container spacing='large'>
+      <ChevronLeft className='cursor-pointer' onClick={() => navigate('/')} />
       <Lightbox
         plugins={[Zoom]}
         open={openLightbox.visible}
