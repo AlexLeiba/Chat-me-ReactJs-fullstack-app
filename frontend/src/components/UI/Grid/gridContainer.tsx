@@ -7,7 +7,7 @@ const containerVariants = cva(
     'mx-auto w-full',
     'lg:max-w-[1296px] lg:px-8',
     'md:max-w-[calc(100vw_-_128px)] md:px-4',
-    'max-w-full px-8',
+    'max-w-full px-4 md:px-8 lg:px-8',
   ],
   {
     variants: {
@@ -17,7 +17,7 @@ const containerVariants = cva(
       },
       spacing: {
         none: 'lg:py-0 md:py-0 py-0',
-        default: 'lg:py-24 md:py-12 py-12',
+        default: 'lg:py-24 md:py-12 ',
         large: 'lg:py-48 md:py-24 py-24',
         medium: 'lg:py-12 md:py-6 py-6',
       },

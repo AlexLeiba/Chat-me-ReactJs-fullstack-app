@@ -1,3 +1,4 @@
+import { cn } from '../../../../src/lib/utils';
 import { Loader } from 'lucide-react';
 import React from 'react';
 
@@ -22,7 +23,7 @@ export function Button({
       disabled={disabled}
       onClick={onClick}
       type={type}
-      className={className}
+      className={cn('hover:bg-secondary', className)}
     >
       {loading && <Loader className=' animate-spin' />} {children}
     </button>

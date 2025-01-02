@@ -97,7 +97,7 @@ function ProfilePage() {
   }
 
   return (
-    <Container>
+    <Container spacing='large'>
       <Lightbox
         plugins={[Zoom]}
         open={openLightbox.visible}
@@ -117,7 +117,7 @@ function ProfilePage() {
       />
       <Row>
         <Col lg={6} lgOffset={3} sm={4}>
-          <Spacer size={6} />
+          {/* <Spacer size={6} /> */}
           <div className='text-center flex justify-center items-center flex-col'>
             <h2>Profile</h2>
             <p>Your profile information</p>
@@ -166,7 +166,7 @@ function ProfilePage() {
           <Button
             loading={loadingUpdateFullName}
             onClick={() => updateFullName(fullName)}
-            className={'btn bg-primary/70 w-full '}
+            className={'btn bg-primary/70 w-full  '}
           >
             <p className='text-primary-content'>Update full name</p>
           </Button>

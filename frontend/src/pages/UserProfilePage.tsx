@@ -67,7 +67,7 @@ function UserProfilePage() {
   }
 
   return (
-    <Container>
+    <Container spacing='large'>
       <Lightbox
         plugins={[Zoom]}
         open={openLightbox.visible}
@@ -87,7 +87,6 @@ function UserProfilePage() {
       />
       <Row>
         <Col lg={6} lgOffset={3}>
-          <Spacer size={6} />
           <div className='text-center flex justify-center items-center flex-col'>
             <h2> {selectedUser?.fullName}`s Profile</h2>
           </div>

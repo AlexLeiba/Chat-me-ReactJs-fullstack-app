@@ -20,7 +20,7 @@ export default function HomePage() {
 
   return (
     <Container>
-      <Row className='lg:mt-12 md:mt-12 mt-8 mb-8 px-0 justify-center rounded-lg shadow-lg lg:max-h-[900px] md:max-h-[900px] max-h-[800px] h-[calc(100vh-200px)]'>
+      <Row className=' lg:mt-12 md:mt-12 mt-14  px-0 justify-center rounded-lg shadow-lg lg:max-h-[900px] md:max-h-[900px]  lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] h-[calc(100vh-60px)]'>
         <Col
           lg={3}
           md={1}
@@ -32,7 +32,7 @@ export default function HomePage() {
 
         {selectedUser ? (
           <Col
-            className='transition-all ease-out flex h-full rounded-r-lg overflow-hidden lg:px-0 md:px-0  bg-pimary '
+            className='px-0 transition-all ease-out flex h-full rounded-r-lg overflow-hidden lg:px-0 md:px-0  bg-pimary '
             lg={9}
             md={3}
             sm={slideMenuOnMobile.chat}

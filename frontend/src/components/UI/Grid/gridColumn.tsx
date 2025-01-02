@@ -44,9 +44,9 @@ const columnVariants = cva(['max-w-full', 'lg:px-3', 'md:px-3', 'px-3'], {
     },
     sm: {
       4: 'w-full',
-      3: 'w-3/4',
+      3: 'w-[85%]',
       2: 'w-2/4',
-      1: 'w-1/4',
+      1: 'w-[15%]',
     },
     smOffset: {
       3: 'ml-[75%]',

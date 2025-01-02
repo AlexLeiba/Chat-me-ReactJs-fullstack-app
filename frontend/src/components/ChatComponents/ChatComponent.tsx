@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import useChatStore from '../../store/useChatStore';
 import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
-// import MessageSkeleton from '../../components/Skeletons/MessageSkeleton';
+import MessageSkeleton from '../../components/Skeletons/MessageSkeleton';
 import useAuthStore from '../../store/useAuthStore';
 import { format } from 'date-fns';
 
@@ -38,7 +38,6 @@ function ChatComponent() {
     subscribeToMessages(); //to show messeges in real time/ will update messages array
     if (refMessages.current && messages) {
       refMessages.current.scrollIntoView({
-        behavior: 'smooth',
         block: 'nearest',
       });
     }
@@ -54,8 +53,8 @@ function ChatComponent() {
           <ChatHeader />
 
           {/* Chat skeleton */}
-          {/* <MessageSkeleton /> */}
-          <p>Loading...</p>
+          <MessageSkeleton />
+          {/* <p>Loading...</p> */}
 
           <ChatInput />
         </div>
@@ -66,7 +65,7 @@ function ChatComponent() {
     <div className='flex h-full w-full  flex-col  '>
       <ChatHeader />
 
-      <div className='flex-1  p-5 space-y-4 overflow-y-auto bg-base-100'>
+      <div className='flex-1  lg:p-5 md:p-5 p-2  space-y-4 overflow-y-auto bg-base-100'>
         {messages.map((message, index) => (
           // CHAT CONTAINER
           <div

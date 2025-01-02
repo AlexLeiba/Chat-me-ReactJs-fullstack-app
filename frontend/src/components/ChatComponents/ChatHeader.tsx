@@ -5,6 +5,7 @@ import { ChevronRight, Eye, X } from 'lucide-react';
 import React from 'react';
 import breakpoints from '../../lib/breakpoint';
 import { Link } from 'react-router-dom';
+import { cn } from '../../../src/lib/utils';
 
 const MOBILE_MAX_BREAKPOINT = breakpoints.mobile.breakpoints.max;
 
@@ -30,7 +31,12 @@ function ChatHeader() {
   }
   if (!selectedUser) return null;
   return (
-    <div className=' bg-base-200 border-b border-base-300 flex gap-2 p-4  justify-between items-center  rounded-none'>
+    <div
+      className={cn(
+        ' bg-base-200 border-b border-base-300 flex gap-2 lg:p-4 md:p-4   justify-between items-center  rounded-none',
+        slideMenuOnMobile.usersList === 1 ? 'p-2' : 'p-4'
+      )}
+    >
       {/* Avatar */}
       <div className='flex gap-2 items-center justify-between'>
         {slideMenuOnMobile.usersList === 1 && (
@@ -88,7 +94,11 @@ function ChatHeader() {
           <div className='flex gap-4'>
             <div className='lg:block text-left min-w-0'>
               <div className='font-medium truncate'>
-                <p className='font-bold'>{selectedUser.fullName}</p>
+                <p className='font-bold'>
+                  {selectedUser.fullName.length > 22
+                    ? `${selectedUser.fullName.slice(0, 22)}...`
+                    : selectedUser.fullName}
+                </p>
               </div>
               <div className='flex gap-2 items-center'>
                 <div className='text-sm text-zinc-400'>
@@ -107,14 +117,15 @@ function ChatHeader() {
           </div>
         )}
       </div>
-
-      <X
-        className=' cursor-pointer text-base-content/70'
-        onClick={() => {
-          handleUnselectUserToChatWith();
-          // setSelectedUser(null);
-        }}
-      />
+      <div>
+        <X
+          className=' cursor-pointer text-base-content/70'
+          onClick={() => {
+            handleUnselectUserToChatWith();
+            // setSelectedUser(null);
+          }}
+        />
+      </div>
     </div>
   );
 }

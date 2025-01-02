@@ -1,7 +1,7 @@
 import useChatStore, { User } from '../../store/useChatStore';
 import { ChevronLeft, Users } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-// import SidebarSkeleton from '../../components/Skeletons/SidebarSkeleton';
+import SidebarSkeleton from '../../components/Skeletons/SidebarSkeleton';
 import useAuthStore from '../../store/useAuthStore';
 import { Input } from '../UI/Input/Input';
 import { Spacer } from '../UI/spacer/spacer';
@@ -96,7 +96,7 @@ function Sidebar() {
   return (
     <aside className='h-full w-full    border-base-300 flex flex-col transition-all duration-200 bg-base-200   '>
       {/* SIDEBAR HEADER */}
-      <div className='border-b border-base-300 w-full p-4'>
+      <div className='border-b border-base-300 w-full  p-4'>
         <div className='flex justify-between'>
           <Users className='w-6 h-6' />
           {slideMenuOnMobile.usersList === 3 && (
@@ -112,7 +112,9 @@ function Sidebar() {
           <div className='flex lg:items-center md:items-center justify-between lg:flex-row md:flex-col sm:flex-col  items-start '>
             <h4>Contacts</h4>
 
-            <p>Online: {onlineUsers.length - 1}</p>
+            <p>
+              Online: {onlineUsers.length === 0 ? 0 : onlineUsers.length - 1}
+            </p>
           </div>
         )}
         <Spacer size={2} />
@@ -153,16 +155,16 @@ function Sidebar() {
       </div>
 
       {isGetUsersLoading ? (
-        // <SidebarSkeleton />
-        <p>Loading...</p>
+        <SidebarSkeleton />
       ) : (
+        // <p>Loading...</p>
         <>
           {/* USER CARDS */}
           <div className=' overflow-auto w-full  h-[calc(100vh-200px)]'>
             {handledisplayAllUsers().map((user, index) => (
               <button
                 key={user._id + index}
-                className={`w-full pl-4 pr-4 pt-2 pb-2 flex items-center gap-3 hover:bg-base-100  relative ${
+                className={`w-full md:pl-4 lg:pl-4 pl-2 pr-4 pt-2 pb-2 flex items-center gap-3 hover:bg-base-100  relative ${
                   selectedUser?._id === user._id
                     ? 'bg-base-300 ring-1 ring-base-300'
                     : ''
@@ -177,7 +179,7 @@ function Sidebar() {
                       height={100}
                       src={user.profilePicture || '/default-avatar.png'}
                       alt={user.fullName || 'profile picture'}
-                      className='size-10  object-cover rounded-full bg-slate-100'
+                      className='lg:size-10 md:size-10 size-7  object-cover rounded-full bg-slate-100'
                     />
                   </div>
                   {onlineUsers.includes(user._id) && (

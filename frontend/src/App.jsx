@@ -10,15 +10,23 @@ import ProfilePage from './pages/ProfilePage';
 import AboutPage from './pages/AboutPage';
 import UserProfilePage from './pages/UserProfilePage';
 
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import useAuthStore from './store/useAuthStore';
 import useThemeStore from './store/useThemeStore';
+import useChatStore from './store/useChatStore';
 
 import { Loader } from 'lucide-react';
 import { Toaster } from 'react-hot-toast';
+import { useWindowSize } from './lib/useWindowSize';
+import breakpoints from './lib/breakpoint';
+
+const MOBILE_MAX_BREAKPOINT = breakpoints.mobile.breakpoints.max;
 
 const App = () => {
+  const [windowWidth] = useWindowSize();
+  const { pathname } = useLocation();
   const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
+  const { selectedUser } = useChatStore();
   const { globalTheme } = useThemeStore();
 
   console.log({ onlineUsers });
@@ -36,13 +44,23 @@ const App = () => {
       </div>
     );
 
+  function handleShowFooter() {
+    if (
+      MOBILE_MAX_BREAKPOINT > windowWidth &&
+      selectedUser &&
+      pathname === '/'
+    ) {
+      return false;
+    }
+    return true;
+  }
   return (
     <div data-theme={globalTheme}>
       <header>
         <Header />
       </header>
 
-      <main className='flex flex-col  min-h-[calc(100vh-142px)] '>
+      <main className='flex flex-col md:min-h-[calc(100vh-238px)] lg:min-h-[calc(100vh-238px)] min-h-screen '>
         <Routes>
           <Route
             path='/'
@@ -72,9 +90,11 @@ const App = () => {
       </main>
 
       <Toaster />
-      <footer>
-        <Footer />
-      </footer>
+      {handleShowFooter() && (
+        <footer>
+          <Footer />
+        </footer>
+      )}
     </div>
   );
 };
