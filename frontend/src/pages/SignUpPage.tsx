@@ -11,10 +11,8 @@ import { Input } from '../components/UI/Input/Input';
 import { Spacer } from '../components/UI/spacer/spacer';
 import { Button } from '../components/UI/Button/Button';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
 function SignUpPage() {
-  const navigate = useNavigate();
   const { isLoadingSignUp, signUp } = useAuthStore();
   const {
     handleSubmit,
@@ -30,14 +28,11 @@ function SignUpPage() {
   });
 
   async function onSubmit(data: FormType) {
-    await signUp(data);
-
-    // If the sign-up request will fail, The middleware will make sure that user can't navigate to dashboard
-    navigate('/');
+    signUp(data);
   }
 
   return (
-    <Container>
+    <Container spacing='large'>
       <Row>
         <Col lg={6} lgOffset={3} md={2} mdOffset={1} sm={4}>
           <div className='text-center flex justify-center items-center flex-col'>

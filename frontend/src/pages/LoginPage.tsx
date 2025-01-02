@@ -40,7 +40,7 @@ function LoginPage() {
     navigate('/');
   }
   return (
-    <Container>
+    <Container spacing='large'>
       <Row>
         <Col lg={6} lgOffset={3} md={2} mdOffset={1} sm={4}>
           <div className='text-center flex justify-center items-center flex-col'>

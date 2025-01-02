@@ -266,7 +266,9 @@ const useChatStore = create<ChatStoreType>((set, get) => ({
   unsubscribeToMessages: () => {
     const socket = useAuthStore.getState().socked;
 
-    socket.off('newMessage'); //unsubscribe to messages when the user is not selected
+    if (socket) {
+      socket.off('newMessage'); //unsubscribe to messages when the user is not selected
+    }
   },
 }));
 export default useChatStore;

@@ -26,6 +26,10 @@ export function Header() {
 
   function handleLogout() {
     logout();
+
+    if (MOBILE_MAX_BREAKPOINT > windowWidth) {
+      setOpenBurgerMenu(false);
+    }
   }
 
   function handleNavigationsMenu(url: string) {

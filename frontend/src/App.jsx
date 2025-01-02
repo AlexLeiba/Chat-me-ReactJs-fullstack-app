@@ -64,7 +64,13 @@ const App = () => {
         <Routes>
           <Route
             path='/'
-            element={authUser ? <HomePage /> : <Navigate to='/sign-in' />}
+            element={
+              authUser ? (
+                <HomePage />
+              ) : (
+                !isCheckingAuth && <Navigate to='/sign-in' />
+              )
+            }
           />
           <Route
             path='/sign-up'
