@@ -13,7 +13,6 @@ import UserProfilePage from './pages/UserProfilePage';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import useAuthStore from './store/useAuthStore';
 import useThemeStore from './store/useThemeStore';
-import useChatStore from './store/useChatStore';
 
 import { Loader } from 'lucide-react';
 import { Toaster } from 'react-hot-toast';
@@ -26,7 +25,7 @@ const App = () => {
   const [windowWidth] = useWindowSize();
   const { pathname } = useLocation();
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
-  const { selectedUser } = useChatStore();
+
   const { globalTheme } = useThemeStore();
 
   useEffect(() => {
@@ -41,11 +40,7 @@ const App = () => {
     );
 
   function handleShowFooter() {
-    if (
-      MOBILE_MAX_BREAKPOINT > windowWidth &&
-      selectedUser &&
-      pathname === '/'
-    ) {
+    if (MOBILE_MAX_BREAKPOINT > windowWidth && pathname === '/') {
       return false;
     }
     return true;

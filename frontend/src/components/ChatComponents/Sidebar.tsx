@@ -94,9 +94,9 @@ function Sidebar() {
   }
 
   return (
-    <aside className='h-full w-full    border-base-300 flex flex-col transition-all duration-200 bg-base-200   '>
+    <aside className='h-full w-full     flex flex-col transition-all duration-200 bg-base-200 border-r-[0.5px] border-base '>
       {/* SIDEBAR HEADER */}
-      <div className='border-b border-base-300 w-full  p-4'>
+      <div className='border-b border-base-300 w-full  lg:p-4 md:p-4 pl-2 pt-4 pb-2 pr-2'>
         <div className='flex justify-between'>
           <Users className='w-6 h-6' />
           {slideMenuOnMobile.usersList === 3 && (
@@ -164,9 +164,9 @@ function Sidebar() {
             {handledisplayAllUsers().map((user, index) => (
               <button
                 key={user._id + index}
-                className={`w-full md:pl-4 lg:pl-4 pl-2 pr-4 pt-2 pb-2 flex items-center gap-3 hover:bg-base-100  relative ${
+                className={`w-full md:pl-4 lg:pl-4 pl-2 pr-4 pt-2 pb-2 flex items-center gap-3 hover:bg-base-100  relative  ${
                   selectedUser?._id === user._id
-                    ? 'bg-base-300 ring-1 ring-base-300'
+                    ? 'bg-base-300 ring-1 ring-base-300 border-b-[0.5px] border-base'
                     : ''
                 }`}
                 onClick={() => handleClickOnUserCard(user)}
