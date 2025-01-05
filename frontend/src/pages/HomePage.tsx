@@ -19,8 +19,8 @@ export default function HomePage() {
   }, [checkAuth]);
 
   return (
-    <Container spacing='medium'>
-      <Row className=' lg:mt-12 md:mt-12 mt-14  px-0 justify-center rounded-lg shadow-lg lg:max-h-[900px] md:max-h-[900px]  lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] h-[calc(100vh-60px)]'>
+    <Container spacing='small'>
+      <Row className=' lg:mt-12 md:mt-12 mt-14  px-0 justify-center rounded-lg shadow-lg lg:max-h-[900px] md:max-h-[900px]  lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] h-[calc(100vh-120px)] '>
         <Col
           lg={3}
           md={1}
