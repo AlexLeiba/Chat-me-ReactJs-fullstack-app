@@ -8,7 +8,7 @@ import ReviewChatThemeSection from '../components/PreviewChatThemeSection/Review
 function SettingsPage() {
   const { globalTheme, setGlobalTheme } = useGlobalTeamStore();
   return (
-    <Container spacing='large'>
+    <Container spacing='medium'>
       <Row>
         <Col className='' sm={2} md={4}>
           <div className='flex flex-col gap-1'>

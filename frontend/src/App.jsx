@@ -19,7 +19,7 @@ import { Toaster } from 'react-hot-toast';
 import { useWindowSize } from './lib/useWindowSize';
 import breakpoints from './lib/breakpoint';
 
-const MOBILE_MAX_BREAKPOINT = breakpoints.mobile.breakpoints.max;
+const TABLET_MAX_BREAKPOINT = breakpoints.tablet.breakpoints.max;
 
 const App = () => {
   const [windowWidth] = useWindowSize();
@@ -40,7 +40,7 @@ const App = () => {
     );
 
   function handleShowFooter() {
-    if (MOBILE_MAX_BREAKPOINT > windowWidth && pathname === '/') {
+    if (TABLET_MAX_BREAKPOINT > windowWidth && pathname === '/') {
       return false;
     }
     return true;

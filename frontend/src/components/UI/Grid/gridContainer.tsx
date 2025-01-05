@@ -19,7 +19,8 @@ const containerVariants = cva(
         none: 'lg:py-0 md:py-0 py-0',
         default: 'lg:py-24 md:py-12 ',
         large: 'lg:py-48 md:py-24 py-24',
-        medium: 'lg:py-12 md:py-6 py-6',
+        medium: 'lg:py-24 md:py-12 py-12',
+        small: 'lg:py-8 md:py-8 py-8',
       },
     },
     defaultVariants: {
@@ -31,7 +32,7 @@ const containerVariants = cva(
 
 type ContainerProps = {
   id?: string;
-  spacing?: 'none' | 'large' | 'medium';
+  spacing?: 'none' | 'large' | 'medium' | 'small';
 } & Pick<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
   'className' | 'children'

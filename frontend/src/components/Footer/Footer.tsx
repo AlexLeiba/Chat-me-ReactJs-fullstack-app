@@ -10,7 +10,7 @@ export function Footer() {
   return (
     <Container spacing='none' variant={'fluid'} className='bg-secondary/80'>
       <Row>
-        <Container spacing='medium'>
+        <Container spacing='small'>
           <Row>
             <Col lg={2} md={1} sm={2} className=' p-2 flex  justify-start '>
               <div className='flex flex-col'>

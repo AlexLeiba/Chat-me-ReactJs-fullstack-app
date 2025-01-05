@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
 
   const userId = socket.handshake.query.userId; //get the user id from the query on frontend passed in the io(backend_base_url,{query : {userId} }) connection
 
-  // ONLINE USERS OBJECT
+  // ONLINE USERS IDS OBJECT
   if (userId) {
     onlineUsersSocketMap[userId] = socket.id; //save the socket id in the map with the user id as key
 

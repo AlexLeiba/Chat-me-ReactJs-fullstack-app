@@ -11,6 +11,7 @@ import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
 
 function UserProfilePage() {
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ function UserProfilePage() {
   }
 
   return (
-    <Container spacing='large'>
+    <Container spacing='medium'>
       <ChevronLeft className='cursor-pointer' onClick={() => navigate('/')} />
       <Lightbox
         plugins={[Zoom]}
@@ -112,6 +113,15 @@ function UserProfilePage() {
 
           <Spacer size={8} />
 
+          {selectedUser?.lastTimeActive && (
+            <div className='flex justify-between items-center gap-2'>
+              <p>Last time active</p>
+              <p className='text-sm'>
+                {format(selectedUser?.lastTimeActive, 'MM/dd/yyyy: HH:mm')}
+              </p>
+            </div>
+          )}
+
           <div className='flex justify-between items-center gap-2'>
             <p>Email</p>
             <p className='text-sm'>{selectedUser?.email}</p>
@@ -119,15 +129,16 @@ function UserProfilePage() {
           <div className='flex justify-between items-center gap-2'>
             <p>Member since</p>
             <p className='text-sm'>
-              {selectedUser?.createdAt?.substring(0, 10)}
+              {selectedUser && format(selectedUser?.createdAt, 'MM/dd/yyyy')}
             </p>
           </div>
-          <div className='flex justify-between items-center gap-2'>
-            <p>Last updated profile</p>
-            <p className='text-sm'>
-              {selectedUser?.updatedAt?.substring(0, 10)}
-            </p>
-          </div>
+
+          {selectedUser?.favoriteTheme && (
+            <div className='flex justify-between items-center gap-2'>
+              <p>Favorite theme</p>
+              <p className='text-sm'>{selectedUser?.favoriteTheme}</p>
+            </div>
+          )}
         </Col>
       </Row>
     </Container>

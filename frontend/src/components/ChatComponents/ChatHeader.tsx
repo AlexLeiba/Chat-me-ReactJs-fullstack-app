@@ -6,6 +6,7 @@ import React from 'react';
 import breakpoints from '../../lib/breakpoint';
 import { Link } from 'react-router-dom';
 import { cn } from '../../../src/lib/utils';
+import { formatDistanceToNow } from 'date-fns';
 
 const MOBILE_MAX_BREAKPOINT = breakpoints.mobile.breakpoints.max;
 
@@ -105,7 +106,9 @@ function ChatHeader() {
                   <p className='text-xs'>
                     {onlineUsers.includes(selectedUser._id)
                       ? 'Online'
-                      : 'Offline'}
+                      : `Active ${formatDistanceToNow(
+                          new Date(selectedUser.lastTimeActive)
+                        )} ago`}
                   </p>
                 </div>
 

@@ -4,7 +4,7 @@ import { Spacer } from '../components/UI/spacer/spacer';
 
 function AboutPage() {
   return (
-    <Container spacing='large'>
+    <Container spacing='medium'>
       <h1 className='font-bold'>About</h1>
       <Spacer size={4} />
       <Row>

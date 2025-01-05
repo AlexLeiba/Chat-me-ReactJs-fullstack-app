@@ -65,7 +65,6 @@ export async function login(req, res) {
     if (!userFromDB) {
       return res.status(400).json({ message: 'Invalid Credentials' });
     }
-    console.log('🚀 ~ login ~ userFromDB:', userFromDB);
 
     const isComparedPasswordsCorrect = bycrypt.compareSync(
       password,
@@ -121,7 +120,7 @@ export const logout = async (req, res) => {
   }
 };
 
-export async function updateProfile(req, res) {
+export async function updateProfilePicture(req, res) {
   try {
     const { profilePicture } = req.body;
     const requestUserId = req.user._id; //the user object which was created on protectedRoute
@@ -180,9 +179,9 @@ export async function updateProfile(req, res) {
 }
 
 // UPDATE FULL NAME
-export async function updateProfileFullName(req, res) {
+export async function updateProfile(req, res) {
   try {
-    const { fullName } = req.body;
+    const { fullName, favoriteTheme } = req.body;
     const requestUserId = req.user._id; //the user object which was created on protectedRoute
 
     if (!fullName) {
@@ -197,7 +196,10 @@ export async function updateProfileFullName(req, res) {
 
     const updatedUserResponse = await UserModel.findByIdAndUpdate(
       requestUserId,
-      { fullName },
+      {
+        fullName,
+        favoriteTheme: favoriteTheme === 'None' ? '' : favoriteTheme,
+      },
       { new: true }
     );
 
@@ -211,18 +213,25 @@ export async function updateProfileFullName(req, res) {
         updatedAt: updatedUserResponse.updatedAt,
       });
     } else {
-      return res.status(400).json({ message: 'Error updating full name' });
+      return res.status(400).json({ message: 'Error updating profile' });
     }
   } catch (error) {
     console.log('🚀 \n\n ~ updateProfile ~ error:', error);
     return res
       .status(500)
-      .json({ message: 'Internal server error on update full name' });
+      .json({ message: 'Internal server error on update profile' });
   }
 }
 
-export const checkAuth = (req, res) => {
+export const checkAuth = async (req, res) => {
+  const currentLoggedUserId = req.user._id; //the user object which was created on protectedRoute
+
   try {
+    await UserModel.findByIdAndUpdate(currentLoggedUserId, {
+      $set: {
+        lastTimeActive: Date.now(),
+      },
+    });
     res.status(200).json(req.user);
   } catch (error) {
     console.log('Error in checkAuth controller', error.message);

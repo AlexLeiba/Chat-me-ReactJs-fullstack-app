@@ -40,6 +40,14 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
+    favoriteTheme: {
+      type: String,
+      default: '',
+    },
+    lastTimeActive: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   {
     timestamps: true, // add createdAt and updatedAt fields

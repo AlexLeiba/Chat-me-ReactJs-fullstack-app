@@ -14,6 +14,8 @@ type User = {
   updatedAt: string;
   idsOfSendersWhoLeftUnreadMessages: string[];
   idsOfReceiversWhoUnreadMessages: string[];
+  lastTimeActive: string;
+  favoriteTheme: string;
 };
 
 type Store = {
@@ -21,7 +23,7 @@ type Store = {
   isLoadingCheckAuth: boolean;
   isLoadingSignUp: boolean;
   isLoadingSignIn: boolean;
-  isLoadingUpdateProfile: boolean;
+  isLoadingUpdateProfilePicture: boolean;
   //
 
   authUser: User | null;
@@ -34,16 +36,20 @@ type Store = {
 
   user: User | null;
 
-  loadingUpdateFullName: boolean;
+  loadingUpdateProfile: boolean;
 
-  updateFullName: (fullName: string) => void;
+  updateProfile: (fullName: string, favoriteTheme?: string) => void;
   setIsLoggedIn: (isLoggedIn: boolean) => void;
   setUser: (user: User) => void;
   checkAuth: () => void;
   signUp: (data: FormType) => void;
   signIn: (data: FormType) => void;
   logout: () => void;
-  updateProfile: ({ profilePicture }: { profilePicture: string }) => void;
+  updateProfilePicture: ({
+    profilePicture,
+  }: {
+    profilePicture: string;
+  }) => void;
 
   // SOCKET
   connectSocket: () => void;
@@ -52,7 +58,7 @@ type Store = {
   onlineUsers: string[];
 };
 
-const BACKEND_BASE_URL = '/';
+const BACKEND_BASE_URL = 'http://localhost:5001'; //'/';
 // import.meta.env.MODE === 'development' ? 'http://localhost:5001' : '/';
 
 export type FormType = Zod.infer<typeof SignupSchema>;
@@ -87,13 +93,6 @@ const useAuthStore: UseBoundStore<StoreApi<Store>> = create(
         } catch (error: any) {
           console.log('🚀 \n\n ~ checkAuth: ~ error:', error);
           set({ authUser: null });
-          // if (error.response?.data?.message) {
-          //   toast.error(error.response.data.message);
-          // } else if (error?.response?.statusText) {
-          //   toast.error(error.response.statusText);
-          // } else if (error.message) {
-          //   toast.error(error.message);
-          // }
         } finally {
           set({ isLoadingCheckAuth: false });
         }
@@ -200,16 +199,23 @@ const useAuthStore: UseBoundStore<StoreApi<Store>> = create(
 
       // UPDATE PROFILE IMAGE
       profilePicture: '',
-      isLoadingUpdateProfile: false,
-      updateProfile: async ({ profilePicture }: { profilePicture: string }) => {
-        set({ isLoadingUpdateProfile: true });
+      isLoadingUpdateProfilePicture: false,
+      updateProfilePicture: async ({
+        profilePicture,
+      }: {
+        profilePicture: string;
+      }) => {
+        set({ isLoadingUpdateProfilePicture: true });
 
         try {
-          const response = await axiosInstance.put('/auth/update-profile', {
-            profilePicture,
-          });
+          const response = await axiosInstance.put(
+            '/auth/update-profile-picture',
+            {
+              profilePicture,
+            }
+          );
           set({
-            isLoadingUpdateProfile: true,
+            isLoadingUpdateProfilePicture: true,
             authUser: response.data,
           });
 
@@ -219,7 +225,7 @@ const useAuthStore: UseBoundStore<StoreApi<Store>> = create(
 
           set({
             error: error.response.data.message,
-            isLoadingUpdateProfile: false,
+            isLoadingUpdateProfilePicture: false,
           });
 
           if (error.response.data.message) {
@@ -231,24 +237,28 @@ const useAuthStore: UseBoundStore<StoreApi<Store>> = create(
             'Something went wrong, please try again with a smaller image'
           );
         } finally {
-          set({ isLoadingUpdateProfile: false });
+          set({ isLoadingUpdateProfilePicture: false });
         }
       },
-      //
-      loadingUpdateFullName: false,
-      updateFullName: async (fullName: string) => {
-        if (!fullName) return toast.error('Please type your name');
-        set({ loadingUpdateFullName: true });
+
+      loadingUpdateProfile: false,
+      updateProfile: async (fullName: string, favoriteTheme?: string) => {
+        const { authUser } = get();
+
+        set({ loadingUpdateProfile: true });
         try {
-          const response = await axiosInstance.put('/auth/update-full-name', {
-            fullName,
+          const response = await axiosInstance.put('/auth/update-profile', {
+            fullName: fullName ? fullName : authUser?.fullName,
+            favoriteTheme: favoriteTheme
+              ? favoriteTheme
+              : authUser?.favoriteTheme,
           });
 
-          set({ loadingUpdateFullName: false, authUser: response.data });
+          set({ loadingUpdateProfile: false, authUser: response.data });
 
-          toast.success('Full name updated successfully');
+          toast.success('Profile updated successfully');
         } catch (error: any) {
-          set({ loadingUpdateFullName: false });
+          set({ loadingUpdateProfile: false });
           if (error.response.data.message) {
             toast.error(error.response.data.message);
           } else if (error.response.statusText) {

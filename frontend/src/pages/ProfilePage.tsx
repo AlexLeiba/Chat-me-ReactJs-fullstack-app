@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useAuthStore from '../store/useAuthStore';
 import { Container, Row, Col } from '../components/UI/Grid';
 import { Camera, Loader, User } from 'lucide-react';
@@ -10,6 +10,16 @@ import 'yet-another-react-lightbox/styles.css';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import toast from 'react-hot-toast';
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/UI/Dropdown/Dropdown';
+import { format } from 'date-fns';
+import { THEMES_EDIT_PROFILE_LIST } from '../consts';
+
 function ProfilePage() {
   const [openLightbox, setOpenLightbox] = useState({
     visible: false,
@@ -20,15 +30,22 @@ function ProfilePage() {
     string | null
   >('');
   const [fullName, setFullName] = useState('');
+  const [favoriteTheme, setFavoriteTheme] = useState('');
   const refUploadImage = useRef<HTMLInputElement>(null);
 
   const {
-    isLoadingUpdateProfile,
-    updateProfile,
+    isLoadingUpdateProfilePicture,
+    updateProfilePicture,
     authUser,
-    loadingUpdateFullName,
-    updateFullName,
+    loadingUpdateProfile,
+    updateProfile,
   } = useAuthStore();
+
+  useEffect(() => {
+    if (authUser?.favoriteTheme) {
+      setFavoriteTheme(authUser.favoriteTheme);
+    }
+  }, [authUser]);
 
   function handleUploadImage() {
     refUploadImage.current?.click();
@@ -51,7 +68,7 @@ function ProfilePage() {
         const base64Image = reader.result as string;
         setUploadedImagePreview(base64Image);
 
-        updateProfile({ profilePicture: base64Image });
+        updateProfilePicture({ profilePicture: base64Image });
       };
     }
   }
@@ -96,7 +113,7 @@ function ProfilePage() {
   }
 
   return (
-    <Container spacing='large'>
+    <Container spacing='medium'>
       <Lightbox
         plugins={[Zoom]}
         open={openLightbox.visible}
@@ -128,7 +145,7 @@ function ProfilePage() {
               {handleShowProfileImage()}
 
               <div className='hover:bg-slate-200 rounded-full w-12 h-12 bg-slate-300 pointer absolute bottom-0 right-0 flex justify-center items-center'>
-                {isLoadingUpdateProfile ? (
+                {isLoadingUpdateProfilePicture ? (
                   <Loader className=' animate-spin w-8 h-8 text-black ' />
                 ) : (
                   <Camera
@@ -138,7 +155,7 @@ function ProfilePage() {
                 )}
               </div>
               <input
-                disabled={isLoadingUpdateProfile}
+                disabled={isLoadingUpdateProfilePicture}
                 onChange={(e) => handleImageUpload(e)}
                 ref={refUploadImage}
                 type='file'
@@ -150,8 +167,10 @@ function ProfilePage() {
             </p>
           </div>
           <Spacer size={8} />
+
+          {/* FULL NAME */}
           <Input
-            disabled={loadingUpdateFullName}
+            disabled={loadingUpdateProfile}
             onChange={(e) => setFullName(e.target.value)}
             defaultValue={authUser?.fullName}
             leftIcon={<User />}
@@ -161,13 +180,38 @@ function ProfilePage() {
             className={'grow'}
             error={''}
           />
+
+          {/* FAVORITE THEME */}
           <Spacer size={4} />
+          <p className='  dark:text-white'>Share your favorite theme</p>
+          <Spacer size={2} />
+
+          <Select onValueChange={(e) => setFavoriteTheme(e)}>
+            <SelectTrigger className='w-full text-lg rounded-lg  bg-transparent h-12 border-[1px] border-base-content/20  text-left focus:outline-none focus:ring-0 focus:border-none'>
+              <SelectValue
+                placeholder={favoriteTheme ? favoriteTheme : 'Select theme'}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {THEMES_EDIT_PROFILE_LIST.map((category, index) => {
+                return (
+                  <SelectItem value={category} key={index}>
+                    {category}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+
+          {/* SUBMIT BUTTON */}
+          <Spacer size={8} />
           <Button
-            loading={loadingUpdateFullName}
-            onClick={() => updateFullName(fullName)}
+            disabled={!fullName && !favoriteTheme}
+            loading={loadingUpdateProfile}
+            onClick={() => updateProfile(fullName, favoriteTheme)}
             className={'btn bg-primary/70 w-full  '}
           >
-            <p className='text-primary-content'>Update full name</p>
+            <p className='text-primary-content'>Update profile</p>
           </Button>
 
           <Spacer size={8} />
@@ -178,12 +222,17 @@ function ProfilePage() {
           </div>
           <div className='flex justify-between items-center gap-2'>
             <p>Member since</p>
-            <p className='text-sm'>{authUser?.createdAt?.substring(0, 10)}</p>
+            <p className='text-sm'>
+              {authUser && format(authUser?.createdAt, 'MM/dd/yyyy')}
+            </p>
           </div>
-          <div className='flex justify-between items-center gap-2'>
-            <p>Last updated profile</p>
-            <p className='text-sm'>{authUser?.updatedAt?.substring(0, 10)}</p>
-          </div>
+
+          {favoriteTheme && (
+            <div className='flex justify-between items-center gap-2'>
+              <p>Favorite theme</p>
+              <p className='text-sm'>{favoriteTheme}</p>
+            </div>
+          )}
         </Col>
       </Row>
     </Container>

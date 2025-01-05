@@ -14,6 +14,8 @@ export type User = {
   selectedUserToChatWithId: string | null;
   idsOfSendersWhoLeftUnreadMessages: string[];
   idsOfReceiversWhoUnreadMessages: string[];
+  favoriteTheme: string;
+  lastTimeActive: string;
 };
 
 type MessagesType = {
