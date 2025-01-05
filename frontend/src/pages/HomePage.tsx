@@ -20,7 +20,7 @@ export default function HomePage() {
 
   return (
     <Container spacing='small'>
-      <Row className=' lg:mt-12 md:mt-12 mt-14  px-0 justify-center rounded-lg shadow-lg lg:max-h-[900px] md:max-h-[900px]  lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] h-[calc(100vh-120px)] lg:relative md:relative lg:z-0 md:z-0 fixed top-0 left-5 right-5 z-50'>
+      <Row className=' lg:mt-12 md:mt-12 mt-14  px-0 justify-center rounded-lg shadow-lg lg:max-h-[900px] md:max-h-[900px]  lg:h-[calc(100vh-150px)] md:h-[calc(100vh-150px)] h-[calc(100vh-120px)] lg:relative md:relative lg:z-0 md:z-0 fixed top-0 left-5 right-5 z-10'>
         <Col
           lg={3}
           md={1}
