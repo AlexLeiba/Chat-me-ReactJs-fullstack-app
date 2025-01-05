@@ -116,7 +116,6 @@ function ProfilePage() {
 
   return (
     <Container spacing='medium'>
-      <Spacer size={6} />
       <ChevronLeft className='cursor-pointer' onClick={() => navigate('/')} />
       <Lightbox
         plugins={[Zoom]}
