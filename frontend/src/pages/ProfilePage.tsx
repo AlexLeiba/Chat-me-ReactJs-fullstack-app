@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useAuthStore from '../store/useAuthStore';
 import { Container, Row, Col } from '../components/UI/Grid';
-import { Camera, Loader, User } from 'lucide-react';
+import { Camera, ChevronLeft, Loader, User } from 'lucide-react';
 import { Input } from '../components/UI/Input/Input';
 import { Spacer } from '../components/UI/spacer/spacer';
 import { Button } from '../components/UI/Button/Button';
@@ -19,8 +19,10 @@ import {
 } from '../components/UI/Dropdown/Dropdown';
 import { format } from 'date-fns';
 import { THEMES_EDIT_PROFILE_LIST } from '../consts';
+import { useNavigate } from 'react-router-dom';
 
 function ProfilePage() {
+  const navigate = useNavigate();
   const [openLightbox, setOpenLightbox] = useState({
     visible: false,
     index: 0,
@@ -114,6 +116,8 @@ function ProfilePage() {
 
   return (
     <Container spacing='medium'>
+      <Spacer size={6} />
+      <ChevronLeft className='cursor-pointer' onClick={() => navigate('/')} />
       <Lightbox
         plugins={[Zoom]}
         open={openLightbox.visible}
