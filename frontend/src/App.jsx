@@ -21,7 +21,7 @@ import breakpoints from './lib/breakpoint';
 
 const TABLET_MAX_BREAKPOINT = breakpoints.tablet.breakpoints.max;
 
-export const App = () => {
+const App = () => {
   const [windowWidth] = useWindowSize();
   const { pathname } = useLocation();
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -95,3 +95,5 @@ export const App = () => {
     </React.Fragment>
   );
 };
+
+export default App;
