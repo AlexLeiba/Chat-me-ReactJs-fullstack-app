@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 
@@ -21,7 +21,7 @@ import breakpoints from './lib/breakpoint';
 
 const TABLET_MAX_BREAKPOINT = breakpoints.tablet.breakpoints.max;
 
-const App = () => {
+export const App = () => {
   const [windowWidth] = useWindowSize();
   const { pathname } = useLocation();
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -46,7 +46,7 @@ const App = () => {
     return true;
   }
   return (
-    <div data-theme={globalTheme}>
+    <React.Fragment data-theme={globalTheme}>
       <header>
         <Header />
       </header>
@@ -92,7 +92,6 @@ const App = () => {
           <Footer />
         </footer>
       )}
-    </div>
+    </React.Fragment>
   );
 };
-export default App;

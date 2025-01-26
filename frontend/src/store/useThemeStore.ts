@@ -21,13 +21,3 @@ const useGlobalTeamStore: UseBoundStore<StoreApi<ThemeStore>> = create(
   )
 );
 export default useGlobalTeamStore;
-// import { create } from 'zustand';
-
-// const useThemeStore = create((set) => ({
-//   theme: localStorage.getItem('chat-me-theme') || 'coffee',
-//   setTheme: (theme) => {
-//     localStorage.setItem('chat-me-theme', theme);
-//     set({ theme });
-//   },
-// }));
-// export default useThemeStore;
