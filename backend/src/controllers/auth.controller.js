@@ -90,20 +90,6 @@ export async function login(req, res) {
     return res.status(500).json({ message: 'Internal server error on login' });
   }
 }
-// export async function logout(req, res) {
-//   try {
-//     // await UserModel.findByIdAndUpdate(req.user._id, {
-//     //   selectedUserToChatWithId: null,
-//     // });
-
-//     res.cookie('chat-me-token', '', {
-//       maxAge: 0, //expire immediately,
-//     });
-//   } catch (error) {
-//     console.log('🚀 \n\n ~ logout ~ error:', error);
-//     res.status(500).json({ message: 'Internal server error on logout' });
-//   }
-// }
 
 export const logout = async (req, res) => {
   try {
