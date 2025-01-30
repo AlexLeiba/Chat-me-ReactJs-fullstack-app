@@ -18,6 +18,7 @@ import { Loader } from 'lucide-react';
 import { Toaster } from 'react-hot-toast';
 import { useWindowSize } from './lib/useWindowSize';
 import breakpoints from './lib/breakpoint';
+import { cn } from './lib/utils';
 
 const TABLET_MAX_BREAKPOINT = breakpoints.tablet.breakpoints.max;
 
@@ -51,7 +52,16 @@ const App = () => {
         <Header />
       </header>
 
-      <main className='flex flex-col md:min-h-[calc(100vh-238px)] lg:min-h-[calc(100vh-238px)] min-h-screen '>
+      {/* LG and MD min screen adjust is for Auth pages to avoid scroll */}
+      {/* On Protected pages the Height should be 100vh */}
+      <main
+        className={cn(
+          authUser
+            ? 'min-h-screen'
+            : ' md:min-h-[calc(100vh-206px)] lg:min-h-[calc(100vh-206px)] min-h-screen ',
+          'flex flex-col  '
+        )}
+      >
         <Routes>
           <Route
             path='/'
