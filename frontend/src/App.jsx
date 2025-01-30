@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 
@@ -46,7 +46,7 @@ const App = () => {
     return true;
   }
   return (
-    <React.Fragment data-theme={globalTheme}>
+    <div data-theme={globalTheme}>
       <header>
         <Header />
       </header>
@@ -92,7 +92,7 @@ const App = () => {
           <Footer />
         </footer>
       )}
-    </React.Fragment>
+    </div>
   );
 };
 
